@@ -5,12 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>മൗഹിബത്തെ ആലം</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@700;900&display=swap" rel="stylesheet">
+
+  <!-- Fixed Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@700;900&family=Poppins:wght@600;700;900&display=swap" rel="stylesheet">
+
   <style>
-    body {
-      font-family: 'Noto Sans Malayalam', sans-serif;
+    body { 
+      font-family: 'Poppins', 'Noto Sans Malayalam', sans-serif; 
     }
     .festival-title {
+      font-family: 'Noto Sans Malayalam', sans-serif;
       color: #FFD700;
       text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
     }
@@ -19,6 +23,7 @@
       font-weight: 800;
       color: white;
       text-transform: uppercase;
+      font-family: 'Poppins', sans-serif;
     }
     .vertical-box {
       background: #FFD700;
@@ -27,6 +32,10 @@
       padding: 2px 8px;
       border-radius: 6px;
       font-size: 0.9rem;
+      font-family: 'Poppins', sans-serif;
+    }
+    .rank, .score, .team-name {
+      font-family: 'Poppins', sans-serif;
     }
   </style>
 </head>
@@ -36,22 +45,15 @@
     <!-- Header -->
     <header class="text-center mb-6">
       <div class="bg-green-900 rounded-lg p-3 inline-block w-full">
-        
-        <!-- Malayalam Title in ONE LINE -->
         <h1 class="festival-title text-2xl md:text-4xl font-extrabold mb-1 whitespace-nowrap">
           മൗഹിബത്തെ ആലം
         </h1>
-        
-        <!-- Art Fest + 2K25 -->
         <div class="flex items-center justify-center gap-2">
           <div class="artfest-text text-base md:text-lg">ART FEST</div>
           <span class="vertical-box">2K25</span>
         </div>
       </div>
-
-      <!-- Live Time -->
-      <div id="current-time" 
-           class="text-gray-800 text-xs md:text-sm bg-white shadow px-3 py-1 rounded-full inline-block mt-3 font-bold">
+      <div id="current-time" class="text-gray-800 text-xs md:text-sm bg-white shadow px-3 py-1 rounded-full inline-block mt-3 font-bold">
         Live Updates - Loading...
       </div>
     </header>
@@ -63,11 +65,10 @@
       </h2>
       
       <div id="scoreboard" class="space-y-4">
-        <!-- Teams -->
         <div class="team flex items-center justify-between p-4 md:p-6 bg-red-100 rounded-xl border-l-8 border-red-500" data-team="THILAVA" data-score="240">
           <div class="flex items-center space-x-4">
             <div class="rank text-lg md:text-xl font-extrabold text-red-600 w-6 text-center">1</div>
-            <div class="text-base md:text-lg font-bold text-gray-800 tracking-wide">THILAVA</div>
+            <div class="team-name text-base md:text-lg font-bold text-gray-800 tracking-wide">THILAVA</div>
           </div>
           <div class="score text-xl md:text-2xl font-extrabold text-red-700">240</div>
         </div>
@@ -75,7 +76,7 @@
         <div class="team flex items-center justify-between p-4 md:p-6 bg-green-100 rounded-xl border-l-8 border-green-500" data-team="JALALA" data-score="214">
           <div class="flex items-center space-x-4">
             <div class="rank text-lg md:text-xl font-extrabold text-green-600 w-6 text-center">2</div>
-            <div class="text-base md:text-lg font-bold text-gray-800 tracking-wide">JALALA</div>
+            <div class="team-name text-base md:text-lg font-bold text-gray-800 tracking-wide">JALALA</div>
           </div>
           <div class="score text-xl md:text-2xl font-extrabold text-green-700">214</div>
         </div>
@@ -83,10 +84,17 @@
         <div class="team flex items-center justify-between p-4 md:p-6 bg-blue-100 rounded-xl border-l-8 border-blue-500" data-team="HALAVA" data-score="151">
           <div class="flex items-center space-x-4">
             <div class="rank text-lg md:text-xl font-extrabold text-blue-600 w-6 text-center">3</div>
-            <div class="text-base md:text-lg font-bold text-gray-800 tracking-wide">HALAVA</div>
+            <div class="team-name text-base md:text-lg font-bold text-gray-800 tracking-wide">HALAVA</div>
           </div>
           <div class="score text-xl md:text-2xl font-extrabold text-blue-700">151</div>
         </div>
+      </div>
+
+      <!-- More Results Button -->
+      <div class="text-center mt-6">
+        <a href="more.html" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg shadow-md transition duration-300">
+          ➕ More Results
+        </a>
       </div>
     </div>
   </div>
@@ -99,7 +107,6 @@
   </footer>
 
   <script>
-    // Update live time
     function updateTime() {
       const now = new Date();
       const timeString = now.toLocaleTimeString();
@@ -108,15 +115,10 @@
     updateTime();
     setInterval(updateTime, 1000);
 
-    // Sort teams by score
     function sortTeams() {
       const scoreboard = document.getElementById('scoreboard');
       const teams = Array.from(scoreboard.getElementsByClassName('team'));
-      
-      teams.sort((a, b) => {
-        return b.getAttribute('data-score') - a.getAttribute('data-score');
-      });
-      
+      teams.sort((a, b) => b.getAttribute('data-score') - a.getAttribute('data-score'));
       teams.forEach((team, index) => {
         team.querySelector('.rank').textContent = index + 1;
         scoreboard.appendChild(team);
